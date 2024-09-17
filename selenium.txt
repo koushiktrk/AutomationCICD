@@ -1,0 +1,170 @@
+Running Tests in Terminal using Maven Commands:
+
+1. go to maven download in google
+2. download the maven zip and extract it
+3. set the system variable for maven
+
+Go to the project location in the terminal 
+mvn test -PRegression ( P -profile Regression - profile name)
+
+-D -> stands for maven parameters
+mvn test -Dbrowser=Firefox
+
+
+Jenkins :
+To start jenkins - 	java -jar jenkins.war -httpPort=8080
+
+in jenkins :
+
+New Item -> 
+Selenium Framework -> freestyle project -> 
+Advanced -> Use custom workspace and give the path to the project -> 
+Add build -> Invoke top level maven targets ->command to run the tests (test -P"$profileName" -D"$browserName")
+
+you can parameterize the values
+This project is parameterized -> Add parameters -> choice parameters
+
+
+Headless mode -> invisible browser but execution will happen in the background in the chrome engine
+In basetest :
+ChromeOptions option = new ChromeOptions();
+if(browserName.contains("headless"))
+{
+	option.addArguments("headless");
+}
+driver = new ChromeDriver(option);
+
+
+To schedule jobs:
+
+Configure -> build triggers -> build periodically ->
+
+1. MINUTES (0-59)
+2. HOURS (0-23)
+3. DAYMONTH - Day in a month (1-31)
+4. MONTH - Month in a year (1-12)
+5. DAYWEEK - Day of the week (0-7) where 0 and 7 are Sunday
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Cucumber :
+
+Gherkin : A language that is used to describe the software behaviour.
+Behavior Driven Development (BDD)
+
+In cucumber, test cases are represented as Scenarios.
+Scenarios contain steps which are equivalent to test steps and use the following keywords :
+Given, When, Then, But, And (case sensitive)
+
+Given :	Pre conditions are mentioned in the Given keyword
+When  :	The purpose is to describe the user actions
+Then  :	The purpose is to observe the expected output.
+And	  :	This is used for statements that are an addition to the previous steps and represent positive statements
+But	  :	This is used for statements that are an addition to the previous steps and represent negative statements
+
+
+Example Scenario : Make minimum Due Payment
+Given	:	user is on the pay credit card page
+When	:	user fills all the details and select minimum payment option
+And		:	user clicks on the pay button
+Then	:	credit card payment confirmation page is displayed.
+
+-> When we specify a business requirement, sometimes there will be multiple pre-conditions, user actions and expected results.
+
+
+Feature	:	Feature is a business requirement
+Feature file acts as a test suite which consists of all the test scenarios
+In cucumber, feature files contain Scenarios. We can simply create a feature file using ".feature" extension
+Scenarios belonging to specific areas of an application will be grouped under one feature file.
+
+The text that immediately follows the Feature keyword, and is in the same line, is the Title of the feature file
+Feature file should contain either scenario or the scenario outline. The naming convention should be lowercase with ".feature" extension
+
+Example of a Scenario Outline: 
+We apply parameterization in scenario outline
+
+Scenario Outline : Check if string is palindrome
+Given	:	I entered the word <wordToTest>
+When	:	I test it for palindrome
+Then	:	The output should be <output>
+Examples:
+	| wordToTest | output  |
+	| "Refer"    | "true"  |
+	| "Coin"     | "false" | 
+	| "Space"    | "false" |
+	| "racecar"  | "true"  |
+
+Background : this keyword executes before each and every scenario
+
+In cucumbe terminology, running the test means running the feature file
+
+@CucumberOptions(features = "src/test/java/cucumber", glue="rahulshettyacademy.stepDefinitions",
+monochrome = true,plugin= {"html:target/cucumber.html"})
+
+features tag -> specifying where the feature file is present
+glue -> specifying the step definition file
+tags = "@Regression" / "@ErrorValidation"
+
+Inbuilt, cucumber does not have the power to scan your testNg code.
+So we use AbstractTestNgCucumberTests class 
+
+To integrate cucumber runner file into pom.xml -> create a new profile and give the runner java class path 
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+Git : It is a free and open source distributed version control system designed to handle everything from small to large projects with speed and efficiency.
+
+GitHub : A central repository - A platform that allows to create, store, manage and share the code.
+
+Github : username : koushiktrk 	Password : Automation@2024
+https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html -> basic git commands
+
+-> Create a new repository in github
+-> open command prompt
+
+-> git config --global user.name "koushik" - telling git who your are
+-> git config --global user.email "koushiktrk@gmail.com"
+
+-> git init - initialising git file into the project
+-> git add * - will add all the files
+-> git status - to see what files are added into the staging
+-> git commit -m "First Commit" - commit with a message
+-> git remote add origin https://github.com/koushiktrk/GitDemo.git - Connecting the local repository to a remote server
+-> git push origin master - pushing the code into the master branch of the origin we provided (i.e. our github repo)
+
+
+
+You have a code
+Initialize it as git repository - git init
+Normal -> stash -> commit -> github
+
+
+-> to extract the code for the first time - git clone https://github.com/koushiktrk/GitDemo.git
+
+-> to get the latest changes - git pull origin master
+
+Branching in Git :
+
+-> git checkout -b <branchname> - creating a new branch
+-> git branch - tells you the name of the branch you are in
+
+git pull origin develop 
+git checkout develop ( if you want to switch to a branch that is already created)
+
+Merging the branch into master :
+git checkout master - switching to the master branch
+git merge develop - merging the develop branch to the master branch
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+CI/CD : Continous Integration / Continous Deployment
+
+We will configure the Github webhook to trigger jenkins 
+
+
+
+
+
