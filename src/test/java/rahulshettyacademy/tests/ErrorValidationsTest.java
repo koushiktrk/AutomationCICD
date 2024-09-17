@@ -20,7 +20,8 @@ public class ErrorValidationsTest extends BaseTest {
 	@Test
 	public void productErrorValidation() throws IOException, InterruptedException {
 		String productName = "ZARA COAT 3";
-		ProductCatalogue pc = landingPage.loginApplication("don123@gmail.com", "Automation@123");
+		ProductCatalogue pc = landingPage.loginApplication("don123@gmail.com", "Automation@123");	
+		// Demo purpose
 		pc.addToCart(productName);
 		CartPage cp = pc.goToCart();
 		boolean flag = cp.verifyProductName("ZARA COAT 33");
