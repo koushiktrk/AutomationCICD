@@ -32,7 +32,7 @@ public class SubmitOrderTest extends BaseTest {
 		String cnfrmMsg = cPage.getConfMessage();
 		Assert.assertTrue(cnfrmMsg.equalsIgnoreCase("Thankyou for the order."));
 	}
-
+	//new comments for demo
 	// To verify if the product is displaying in the orders page
 	@Test(dependsOnMethods = { "submitOrder" })
 	public void orderHistoryTest() {
